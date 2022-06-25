@@ -2,53 +2,50 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface
-      .createTable("ms_user", {
-        pk_user_id: {
+      .createTable("ms_item", {
+        pk_item_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        user_name: {
+        item_name: {
           type: Sequelize.STRING,
         },
-        user_telp: {
-          type: Sequelize.STRING,
+        item_price: {
+          type: Sequelize.FLOAT,
         },
-        user_bio: {
+        item_description: {
           type: Sequelize.TEXT,
         },
-        user_photoprofile: {
-          type: Sequelize.TEXT,
-        },
-        fk_login_id: {
+        fk_category_id: {
           type: Sequelize.INTEGER,
         },
-        fk_city_id: {
+        fk_user_id: {
           type: Sequelize.INTEGER,
         },
       })
       .then(() => {
-        queryInterface.addConstraint("ms_user", {
-          fields: ["fk_city_id"],
+        queryInterface.addConstraint("ms_item", {
+          fields: ["fk_user_id"],
           type: "foreign key",
-          name: "fk_ms_user_fk_city_id",
+          name: "fk_ms_item_fk_user_id",
           references: {
-            table: "ms_city",
-            field: "pk_city_id",
+            table: "ms_user",
+            field: "pk_user_id",
           },
           onDelete: "CASCADE",
           onUpdate: "CASCADE",
         });
       })
       .then(() => {
-        queryInterface.addConstraint("ms_user", {
-          fields: ["fk_login_id"],
+        queryInterface.addConstraint("ms_item", {
+          fields: ["fk_category_id"],
           type: "foreign key",
-          name: "fk_ms_user_fk_login_id",
+          name: "fk_ms_item_fk_category_id",
           references: {
-            table: "ms_login",
-            field: "pk_login_id",
+            table: "ms_category",
+            field: "pk_category_id",
           },
           onDelete: "CASCADE",
           onUpdate: "CASCADE",
@@ -56,6 +53,6 @@ module.exports = {
       });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("ms_user");
+    await queryInterface.dropTable("ms_item");
   },
 };

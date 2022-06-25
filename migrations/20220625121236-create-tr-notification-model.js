@@ -1,22 +1,22 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("ms_login", {
-      pk_login_id: {
+    await queryInterface.createTable("tr_notification", {
+      pk_notification_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      login_email: {
-        type: Sequelize.STRING,
+      fk_user_id: {
+        type: Sequelize.INTEGER,
       },
-      login_password: {
-        type: Sequelize.TEXT,
+      request_renter: {
+        type: Sequelize.INTEGER,
       },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("ms_login");
+    await queryInterface.dropTable("tr_notification");
   },
 };
